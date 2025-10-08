@@ -1,8 +1,10 @@
-import { useRef, useEffect } from 'react';
-import TodoItem from './Item';
+import { useRef, useEffect, useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
+import { TodoItem } from './Item';
 
-export default function TodoList({ todos, onToggle, onDelete }) {
+export const TodoList = () => {
   const listRef = useRef(null);
+  const { todos } = useContext(TodoContext);
 
   useEffect(() => {
     if (listRef.current) {
@@ -13,8 +15,7 @@ export default function TodoList({ todos, onToggle, onDelete }) {
   if (todos.length === 0) {
     return (
       <div className="text-center text-gray-400 py-12">
-        <p className="text-lg">Belum ada todo</p>
-        <p className="text-sm mt-2">Tambahkan yang pertama di atas!</p>
+        <p className="text-lg">Belum ada tugas</p>
       </div>
     );
   }
@@ -25,13 +26,8 @@ export default function TodoList({ todos, onToggle, onDelete }) {
       className="space-y-2 max-h-96 overflow-y-auto pr-2"
     >
       {todos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
+        <TodoItem key={todo.id} todo={todo} />
       ))}
     </div>
   );
-}
+};
